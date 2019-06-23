@@ -252,6 +252,7 @@ const styles = StyleSheet.create({
   message: {
     flex: 1,
     margin: 8,
+    height: '100%'
   },
   actions: {
     flexDirection: 'row',
