@@ -16,6 +16,7 @@ export interface ImageProps {
   source: ImageSourcePropType;
   size?: number;
   style?: any;
+  imageProps?: any;
   theme?: ThemeShape;
 }
 
