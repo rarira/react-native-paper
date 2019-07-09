@@ -16,6 +16,7 @@ type Props = {
    */
   size: number,
   style?: any,
+  imageStyle?: any,
   /**
    * @optional
    */
@@ -69,7 +70,7 @@ class AvatarImage extends React.Component<Props> {
       >
         <Image
           source={source}
-          style={{ width: size, height: size, borderRadius: size / 2 }}
+          style={[{ width: size, height: size, borderRadius: size / 2 }, imageStyle]}
         />
       </View>
     );
