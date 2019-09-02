@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { TextInputProps as NativeTextInputProps, TextInputFocusEventData, NativeSyntheticEvent } from 'react-native';
+import {
+  TextInputProps as NativeTextInputProps,
+  TextInputFocusEventData,
+  NativeSyntheticEvent,
+} from 'react-native';
 import { ThemeShape } from '../types';
 
 export interface TextInputProps extends NativeTextInputProps {
@@ -9,6 +13,7 @@ export interface TextInputProps extends NativeTextInputProps {
   placeholder?: string;
   error?: boolean;
   onChangeText?: (text: string) => void;
+  tintColor?: string;
   underlineColor?: string;
   multiline?: boolean;
   numberOfLines?: number;

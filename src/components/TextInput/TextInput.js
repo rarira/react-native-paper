@@ -47,6 +47,7 @@ export type TextInputProps = {|
   /**
    * Selection color of the input
    */
+  tintColor?: string,
   selectionColor?: string,
   /**
    * Underline color of the input.

@@ -18,8 +18,8 @@ const MINIMIZED_LABEL_Y_OFFSET = -12;
 const MAXIMIZED_LABEL_FONT_SIZE = 16;
 const MINIMIZED_LABEL_FONT_SIZE = 12;
 const LABEL_WIGGLE_X_OFFSET = 4;
-const LABEL_PADDING_HORIZONTAL = 12;
-const RANDOM_VALUE_TO_CENTER_LABEL = 4; // Don't know why 4, but it works
+const LABEL_PADDING_HORIZONTAL = 0;
+const RANDOM_VALUE_TO_CENTER_LABEL = 10; // Don't know why 4, but it works
 
 class TextInputFlat extends React.Component<ChildTextInputProps, {}> {
   static defaultProps = {
@@ -35,6 +35,7 @@ class TextInputFlat extends React.Component<ChildTextInputProps, {}> {
       disabled,
       label,
       error,
+      tintColor,
       selectionColor,
       underlineColor,
       style,
@@ -65,7 +66,7 @@ class TextInputFlat extends React.Component<ChildTextInputProps, {}> {
       underlineColorCustom = 'transparent';
     } else {
       inputTextColor = colors.text;
-      activeColor = error ? colors.error : colors.primary;
+      activeColor = error ? colors.error : tintColor || colors.primary;
       placeholderColor = colors.placeholder;
       underlineColorCustom = underlineColor || colors.disabled;
     }
@@ -129,11 +130,9 @@ class TextInputFlat extends React.Component<ChildTextInputProps, {}> {
             outputRange: [
               baseLabelTranslateX > 0
                 ? baseLabelTranslateX +
-                  labelHalfWidth / LABEL_PADDING_HORIZONTAL -
-                  RANDOM_VALUE_TO_CENTER_LABEL
+                  labelHalfWidth / -RANDOM_VALUE_TO_CENTER_LABEL
                 : baseLabelTranslateX -
-                  labelHalfWidth / LABEL_PADDING_HORIZONTAL +
-                  RANDOM_VALUE_TO_CENTER_LABEL,
+                  labelHalfWidth / +RANDOM_VALUE_TO_CENTER_LABEL,
               0,
             ],
           }),
@@ -150,8 +149,8 @@ class TextInputFlat extends React.Component<ChildTextInputProps, {}> {
               backgroundColor: error
                 ? colors.error
                 : parentState.focused
-                  ? activeColor
-                  : underlineColorCustom,
+                ? activeColor
+                : underlineColorCustom,
               // Underlines is thinner when input is not focused
               transform: [{ scaleY: parentState.focused ? 1 : 0.5 }],
             },
@@ -268,7 +267,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flexGrow: 1,
-    paddingHorizontal: 12,
+    paddingHorizontal: 0,
     fontSize: 16,
     margin: 0,
     minHeight: 58,
