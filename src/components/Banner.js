@@ -1,13 +1,15 @@
 /* @flow */
 
 import * as React from 'react';
-import { View, StyleSheet, Animated } from 'react-native';
+
+import type { $RemoveChildren, Theme } from '../types';
+import { Animated, StyleSheet, View } from 'react-native';
+
+import Button from './Button';
 import Surface from './Surface';
 import Text from './Typography/Text';
-import Button from './Button';
-import { withTheme } from '../core/theming';
-import type { Theme, $RemoveChildren } from '../types';
 import shadow from '../styles/shadow';
+import { withTheme } from '../core/theming';
 
 const ELEVATION = 1;
 
@@ -19,7 +21,7 @@ type Props = $RemoveChildren<typeof Surface> & {|
   /**
    * Content that will be displayed inside banner.
    */
-  children: string,
+  children: string | (() => React.node),
   /**
    * Callback that returns an image to display inside banner.
    */
@@ -205,7 +207,11 @@ class Banner extends React.Component<Props, State> {
               {image ? (
                 <View style={styles.image}>{image({ size: 40 })}</View>
               ) : null}
-              <Text style={styles.message}>{children}</Text>
+              {typeof children === 'string' ? (
+                <Text style={styles.message}>{children}</Text>
+              ) : (
+                <View style={styles.message}>{children}</View>
+              )}
             </View>
             <View style={styles.actions}>
               {actions.map(({ label, ...others }, i) => (
@@ -252,7 +258,7 @@ const styles = StyleSheet.create({
   message: {
     flex: 1,
     margin: 8,
-    height: '100%'
+    height: '100%',
   },
   actions: {
     flexDirection: 'row',
