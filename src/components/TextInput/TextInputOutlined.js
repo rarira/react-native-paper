@@ -1,16 +1,18 @@
 /* @flow */
 
 import * as React from 'react';
+
 import {
-  View,
   Animated,
+  I18nManager,
   TextInput as NativeTextInput,
   StyleSheet,
-  I18nManager,
+  View,
 } from 'react-native';
-import color from 'color';
-import Text from '../Typography/Text';
 import type { ChildTextInputProps, RenderProps } from './types';
+
+import Text from '../Typography/Text';
+import color from 'color';
 
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
@@ -289,7 +291,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    top: 6,
+    top: 0,
     bottom: 0,
   },
   outlinedLabelBackground: {

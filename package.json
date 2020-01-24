@@ -1,6 +1,6 @@
 {
   "name": "react-native-paper",
-  "version": "2.16.26",
+  "version": "2.16.27",
   "description": "Material design for React Native",
   "main": "src/index.js",
   "typings": "typings/index.d.ts",
