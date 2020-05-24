@@ -1,22 +1,24 @@
 /* @flow */
 
 import * as React from 'react';
+
 import {
-  View,
-  StyleSheet,
   Animated,
-  TouchableWithoutFeedback,
   Platform,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native';
-import color from 'color';
+import { black, white } from '../styles/colors';
+
 import Icon from './Icon';
+import type { IconSource } from './Icon';
 import Surface from './Surface';
 import Text from './Typography/Text';
-import TouchableRipple from './TouchableRipple';
-import { withTheme } from '../core/theming';
-import { black, white } from '../styles/colors';
 import type { Theme } from '../types';
-import type { IconSource } from './Icon';
+import TouchableRipple from './TouchableRipple';
+import color from 'color';
+import { withTheme } from '../core/theming';
 
 type Props = React.ElementConfig<typeof Surface> & {|
   /**
@@ -121,6 +123,7 @@ class Chip extends React.Component<Props, State> {
     Animated.timing(this.state.elevation, {
       toValue: 4,
       duration: 200,
+      useNativeDriver: false,
     }).start();
   };
 
@@ -128,6 +131,7 @@ class Chip extends React.Component<Props, State> {
     Animated.timing(this.state.elevation, {
       toValue: 0,
       duration: 150,
+      useNativeDriver: false,
     }).start();
   };
 
@@ -155,8 +159,8 @@ class Chip extends React.Component<Props, State> {
       backgroundColor = mode === 'outlined'
         ? colors.surface
         : dark
-          ? '#383838'
-          : '#ebebeb',
+        ? '#383838'
+        : '#ebebeb',
       borderRadius = 16,
     } = StyleSheet.flatten(style) || {};
 
@@ -191,10 +195,7 @@ class Chip extends React.Component<Props, State> {
       .string();
 
     const underlayColor = selectedColor
-      ? color(selectedColor)
-          .fade(0.5)
-          .rgb()
-          .string()
+      ? color(selectedColor).fade(0.5).rgb().string()
       : selectedBackgroundColor;
 
     const accessibilityTraits = ['button'];

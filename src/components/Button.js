@@ -1,16 +1,18 @@
 /* @flow */
 
 import * as React from 'react';
-import { ActivityIndicator, Animated, View, StyleSheet } from 'react-native';
-import color from 'color';
+
+import { ActivityIndicator, Animated, StyleSheet, View } from 'react-native';
+import { black, white } from '../styles/colors';
+
 import Icon from './Icon';
+import type { IconSource } from './Icon';
 import Surface from './Surface';
 import Text from './Typography/Text';
-import TouchableRipple from './TouchableRipple';
-import { black, white } from '../styles/colors';
-import { withTheme } from '../core/theming';
-import type { IconSource } from './Icon';
 import type { Theme } from '../types';
+import TouchableRipple from './TouchableRipple';
+import color from 'color';
+import { withTheme } from '../core/theming';
 
 type Props = React.ElementConfig<typeof Surface> & {|
   /**
@@ -123,6 +125,7 @@ class Button extends React.Component<Props, State> {
       Animated.timing(this.state.elevation, {
         toValue: 8,
         duration: 200,
+        useNativeDriver: false,
       }).start();
     }
   };
@@ -132,6 +135,7 @@ class Button extends React.Component<Props, State> {
       Animated.timing(this.state.elevation, {
         toValue: 2,
         duration: 150,
+        useNativeDriver: false,
       }).start();
     }
   };
@@ -209,10 +213,7 @@ class Button extends React.Component<Props, State> {
       textColor = colors.primary;
     }
 
-    const rippleColor = color(textColor)
-      .alpha(0.32)
-      .rgb()
-      .string();
+    const rippleColor = color(textColor).alpha(0.32).rgb().string();
     const buttonStyle = {
       backgroundColor,
       borderColor,
@@ -272,12 +273,10 @@ class Button extends React.Component<Props, State> {
                 { fontFamily },
               ]}
             >
-              {React.Children.map(
-                children,
-                child =>
-                  typeof child === 'string' && uppercase
-                    ? child.toUpperCase()
-                    : child
+              {React.Children.map(children, (child) =>
+                typeof child === 'string' && uppercase
+                  ? child.toUpperCase()
+                  : child
               )}
             </Text>
           </View>

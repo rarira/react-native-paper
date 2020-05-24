@@ -1,11 +1,13 @@
 /* @flow */
 
 import * as React from 'react';
-import { Animated, View, StyleSheet } from 'react-native';
-import color from 'color';
+
+import type { $RemoveChildren, Theme } from '../types';
+import { Animated, StyleSheet, View } from 'react-native';
+
 import TouchableRipple from './TouchableRipple';
+import color from 'color';
 import { withTheme } from '../core/theming';
-import type { Theme, $RemoveChildren } from '../types';
 
 type Props = $RemoveChildren<typeof TouchableRipple> & {|
   /**
@@ -79,6 +81,7 @@ class RadioButtonAndroid extends React.Component<Props, State> {
       Animated.timing(this.state.radioAnim, {
         toValue: 1,
         duration: 150,
+        useNativeDriver: false,
       }).start();
     } else {
       this.state.borderAnim.setValue(10);
@@ -86,6 +89,7 @@ class RadioButtonAndroid extends React.Component<Props, State> {
       Animated.timing(this.state.borderAnim, {
         toValue: BORDER_WIDTH,
         duration: 150,
+        useNativeDriver: false,
       }).start();
     }
   }
@@ -105,16 +109,10 @@ class RadioButtonAndroid extends React.Component<Props, State> {
     const checked = this.props.status === 'checked';
 
     if (disabled) {
-      rippleColor = color(theme.colors.text)
-        .alpha(0.16)
-        .rgb()
-        .string();
+      rippleColor = color(theme.colors.text).alpha(0.16).rgb().string();
       radioColor = theme.colors.disabled;
     } else {
-      rippleColor = color(checkedColor)
-        .fade(0.32)
-        .rgb()
-        .string();
+      rippleColor = color(checkedColor).fade(0.32).rgb().string();
       radioColor = checked ? checkedColor : uncheckedColor;
     }
 
