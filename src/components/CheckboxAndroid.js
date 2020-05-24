@@ -1,12 +1,14 @@
 /* @flow */
 
 import * as React from 'react';
-import { Animated, View, StyleSheet } from 'react-native';
-import color from 'color';
+
+import type { $RemoveChildren, Theme } from '../types';
+import { Animated, StyleSheet, View } from 'react-native';
+
 import Icon from './Icon';
 import TouchableRipple from './TouchableRipple';
+import color from 'color';
 import { withTheme } from '../core/theming';
-import type { Theme, $RemoveChildren } from '../types';
 
 type Props = $RemoveChildren<typeof TouchableRipple> & {|
   /**
@@ -71,10 +73,12 @@ class CheckboxAndroid extends React.Component<Props, State> {
       Animated.timing(this.state.scaleAnim, {
         toValue: 0.85,
         duration: checked ? 200 : 0,
+        useNativeDriver: false,
       }),
       Animated.timing(this.state.scaleAnim, {
         toValue: 1,
         duration: checked ? 200 : 350,
+        useNativeDriver: false,
       }),
     ]).start();
   }
@@ -94,16 +98,10 @@ class CheckboxAndroid extends React.Component<Props, State> {
     let rippleColor, checkboxColor;
 
     if (disabled) {
-      rippleColor = color(theme.colors.text)
-        .alpha(0.16)
-        .rgb()
-        .string();
+      rippleColor = color(theme.colors.text).alpha(0.16).rgb().string();
       checkboxColor = theme.colors.disabled;
     } else {
-      rippleColor = color(checkedColor)
-        .fade(0.32)
-        .rgb()
-        .string();
+      rippleColor = color(checkedColor).fade(0.32).rgb().string();
       checkboxColor = checked ? checkedColor : uncheckedColor;
     }
 
@@ -115,8 +113,8 @@ class CheckboxAndroid extends React.Component<Props, State> {
     const icon = indeterminate
       ? 'indeterminate-check-box'
       : checked
-        ? 'check-box'
-        : 'check-box-outline-blank';
+      ? 'check-box'
+      : 'check-box-outline-blank';
 
     return (
       <TouchableRipple
