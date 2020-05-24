@@ -147,6 +147,7 @@ class Banner extends React.Component<Props, State> {
     Animated.timing(this.state.position, {
       duration: 250,
       toValue: 1,
+      useNativeDriver: false,
     }).start();
   };
 
@@ -154,6 +155,7 @@ class Banner extends React.Component<Props, State> {
     Animated.timing(this.state.position, {
       duration: 200,
       toValue: 0,
+      useNativeDriver: false,
     }).start();
   };
 
