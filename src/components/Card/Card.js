@@ -1,19 +1,21 @@
 /* @flow */
 
 import * as React from 'react';
+
 import {
   Animated,
-  View,
-  TouchableWithoutFeedback,
   StyleSheet,
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native';
-import CardContent from './CardContent';
+
 import CardActions from './CardActions';
+import CardContent from './CardContent';
 import CardCover from './CardCover';
 import CardTitle from './CardTitle';
 import Surface from '../Surface';
-import { withTheme } from '../../core/theming';
 import type { Theme } from '../../types';
+import { withTheme } from '../../core/theming';
 
 type Props = React.ElementConfig<typeof Surface> & {|
   /**
@@ -104,6 +106,7 @@ class Card extends React.Component<Props, State> {
     Animated.timing(this.state.elevation, {
       toValue: 8,
       duration: 150,
+      useNativeDriver: false,
     }).start();
   };
 
@@ -111,6 +114,7 @@ class Card extends React.Component<Props, State> {
     Animated.timing(this.state.elevation, {
       toValue: this.props.elevation,
       duration: 150,
+      useNativeDriver: false,
     }).start();
   };
 
@@ -129,12 +133,8 @@ class Card extends React.Component<Props, State> {
     const { elevation } = this.state;
     const { roundness } = theme;
     const total = React.Children.count(children);
-    const siblings = React.Children.map(
-      children,
-      child =>
-        React.isValidElement(child) && child.type
-          ? child.type.displayName
-          : null
+    const siblings = React.Children.map(children, (child) =>
+      React.isValidElement(child) && child.type ? child.type.displayName : null
     );
     return (
       <Surface
@@ -152,16 +152,14 @@ class Card extends React.Component<Props, State> {
           accessible={accessible}
         >
           <View style={styles.innerContainer}>
-            {React.Children.map(
-              children,
-              (child, index) =>
-                React.isValidElement(child)
-                  ? React.cloneElement(child, {
-                      index,
-                      total,
-                      siblings,
-                    })
-                  : child
+            {React.Children.map(children, (child, index) =>
+              React.isValidElement(child)
+                ? React.cloneElement(child, {
+                    index,
+                    total,
+                    siblings,
+                  })
+                : child
             )}
           </View>
         </TouchableWithoutFeedback>

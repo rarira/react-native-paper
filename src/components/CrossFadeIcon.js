@@ -1,10 +1,12 @@
 /* @flow */
 
 import * as React from 'react';
+
 import { Animated, StyleSheet, View } from 'react-native';
-import { polyfill } from 'react-lifecycles-compat';
-import Icon, { isValidIcon, isEqualIcon } from './Icon';
+import Icon, { isEqualIcon, isValidIcon } from './Icon';
+
 import type { IconSource } from './Icon';
+import { polyfill } from 'react-lifecycles-compat';
 
 type Props = {|
   /**
@@ -60,6 +62,7 @@ class CrossFadeIcon extends React.Component<Props, State> {
     Animated.timing(this.state.fade, {
       duration: 200,
       toValue: 0,
+      useNativeDriver: false,
     }).start();
   }
 
