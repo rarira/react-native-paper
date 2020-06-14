@@ -262,7 +262,7 @@ class Snackbar extends React.Component<Props, State> {
               color={colors.accent}
               compact
               mode="text"
-              textStyle={textStyle}
+              textStyle={buttonTextStyle}
             >
               {action.label}
             </Button>
