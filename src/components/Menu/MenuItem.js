@@ -1,15 +1,17 @@
 /* @flow */
 
-import color from 'color';
 import * as React from 'react';
-import { View, StyleSheet } from 'react-native';
-import Icon from '../Icon';
-import TouchableRipple from '../TouchableRipple';
-import Text from '../Typography/Text';
-import { withTheme } from '../../core/theming';
+
+import { StyleSheet, View } from 'react-native';
 import { black, white } from '../../styles/colors';
-import type { Theme } from '../../types';
+
+import Icon from '../Icon';
 import type { IconSource } from '../Icon';
+import Text from '../Typography/Text';
+import type { Theme } from '../../types';
+import TouchableRipple from '../TouchableRipple';
+import color from 'color';
+import { withTheme } from '../../core/theming';
 
 type Props = {
   /**
@@ -33,6 +35,7 @@ type Props = {
    */
   theme: Theme,
   style?: any,
+  titleStyle?: StyleProp<TextStyle>,
 };
 
 /**
@@ -44,7 +47,15 @@ class MenuItem extends React.Component<Props> {
   static displayName = 'Menu.Item';
 
   render() {
-    const { icon, title, disabled, onPress, theme, style } = this.props;
+    const {
+      icon,
+      title,
+      disabled,
+      onPress,
+      theme,
+      style,
+      titleStyle,
+    } = this.props;
 
     const disabledColor = color(theme.dark ? white : black)
       .alpha(0.32)
@@ -53,17 +64,11 @@ class MenuItem extends React.Component<Props> {
 
     const titleColor = disabled
       ? disabledColor
-      : color(theme.colors.text)
-          .alpha(0.87)
-          .rgb()
-          .string();
+      : color(theme.colors.text).alpha(0.87).rgb().string();
 
     const iconColor = disabled
       ? disabledColor
-      : color(theme.colors.text)
-          .alpha(0.54)
-          .rgb()
-          .string();
+      : color(theme.colors.text).alpha(0.54).rgb().string();
 
     return (
       <TouchableRipple
@@ -83,7 +88,7 @@ class MenuItem extends React.Component<Props> {
           >
             <Text
               numberOfLines={1}
-              style={[styles.title, { color: titleColor }]}
+              style={[styles.title, { color: titleColor }, titleStyle]}
             >
               {title}
             </Text>
