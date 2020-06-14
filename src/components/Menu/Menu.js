@@ -1,24 +1,26 @@
 /* @flow */
 
 import * as React from 'react';
+
 import {
-  StyleSheet,
   Animated,
-  View,
-  Easing,
-  Dimensions,
-  TouchableWithoutFeedback,
-  I18nManager,
   BackHandler,
+  Dimensions,
+  Easing,
+  I18nManager,
   Platform,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
   findNodeHandle,
 } from 'react-native';
-import { withTheme } from '../../core/theming';
-import type { Theme } from '../../types';
+
+import { APPROX_STATUSBAR_HEIGHT } from '../../constants';
+import MenuItem from './MenuItem';
 import Portal from '../Portal/Portal';
 import Surface from '../Surface';
-import MenuItem from './MenuItem';
-import { APPROX_STATUSBAR_HEIGHT } from '../../constants';
+import type { Theme } from '../../types';
+import { withTheme } from '../../core/theming';
 
 type Props = {
   /**
@@ -44,6 +46,7 @@ type Props = {
    * Content of the `Menu`.
    */
   children: React.Node,
+  contentStyle?: StyleProp<ViewStyle>,
   style?: any,
   /**
    * @optional
@@ -161,7 +164,7 @@ class Menu extends React.Component<Props, State> {
   _menu: View | null = null;
 
   _measureMenuLayout = () =>
-    new Promise(resolve => {
+    new Promise((resolve) => {
       if (this._menu) {
         this._menu.measureInWindow((x, y, width, height) => {
           resolve({ x, y, width, height });
@@ -170,7 +173,7 @@ class Menu extends React.Component<Props, State> {
     });
 
   _measureAnchorLayout = () =>
-    new Promise(resolve => {
+    new Promise((resolve) => {
       if (this._anchor) {
         this._anchor.measureInWindow((x, y, width, height) => {
           resolve({ x, y, width, height });
@@ -311,7 +314,7 @@ class Menu extends React.Component<Props, State> {
       duration: ANIMATION_DURATION,
       easing: EASING,
       useNativeDriver: true,
-    }).start(finished => {
+    }).start((finished) => {
       if (finished) {
         this._focusFirstDOMNode(this._anchor);
 
@@ -330,6 +333,7 @@ class Menu extends React.Component<Props, State> {
       theme,
       statusBarHeight,
       onDismiss,
+      contentStyle,
     } = this.props;
 
     const {
@@ -450,7 +454,7 @@ class Menu extends React.Component<Props, State> {
 
     return (
       <View
-        ref={ref => {
+        ref={(ref) => {
           this._anchor = ref;
         }}
         collapsable={false}
@@ -462,7 +466,7 @@ class Menu extends React.Component<Props, State> {
               <View style={StyleSheet.absoluteFill} />
             </TouchableWithoutFeedback>
             <View
-              ref={ref => {
+              ref={(ref) => {
                 this._menu = ref;
               }}
               collapsable={false}
@@ -471,7 +475,11 @@ class Menu extends React.Component<Props, State> {
             >
               <Animated.View style={{ transform: positionTransforms }}>
                 <Surface
-                  style={[styles.shadowMenuContainer, shadowMenuContainerStyle]}
+                  style={[
+                    styles.shadowMenuContainer,
+                    shadowMenuContainerStyle,
+                    contentStyle,
+                  ]}
                 >
                   {children}
                 </Surface>
