@@ -1,14 +1,15 @@
 /* @flow */
 
 import * as React from 'react';
-import { StyleSheet, Animated, SafeAreaView } from 'react-native';
+
+import { Animated, SafeAreaView, StyleSheet } from 'react-native';
 
 import Button from './Button';
 import Surface from './Surface';
 import Text from './Typography/Text';
-import { withTheme } from '../core/theming';
-import { white } from '../styles/colors';
 import type { Theme } from '../types';
+import { white } from '../styles/colors';
+import { withTheme } from '../core/theming';
 
 type Props = {|
   /**
@@ -37,7 +38,10 @@ type Props = {|
    * Text content of the Snackbar.
    */
   children: React.Node,
+  wrapperStyle?: StyleProp<ViewStyle>,
   style?: any,
+  textStyle?: StyleProp<TextStyle>,
+  buttonTextStyle?: StyleProp<TextStyle>,
   /**
    * @optional
    */
@@ -194,7 +198,17 @@ class Snackbar extends React.Component<Props, State> {
   _hideTimeout: TimeoutID;
 
   render() {
-    const { children, visible, action, onDismiss, theme, style } = this.props;
+    const {
+      children,
+      visible,
+      action,
+      onDismiss,
+      theme,
+      style,
+      wrapperStyle,
+      textStyle,
+      buttonTextStyle,
+    } = this.props;
     const { colors, roundness } = theme;
 
     if (this.state.hidden) {
@@ -202,7 +216,10 @@ class Snackbar extends React.Component<Props, State> {
     }
 
     return (
-      <SafeAreaView pointerEvents="box-none" style={styles.wrapper}>
+      <SafeAreaView
+        pointerEvents="box-none"
+        style={[styles.wrapper, wrapperStyle]}
+      >
         <Surface
           pointerEvents="box-none"
           accessibilityLiveRegion="polite"
@@ -225,7 +242,13 @@ class Snackbar extends React.Component<Props, State> {
             style,
           ]}
         >
-          <Text style={[styles.content, { marginRight: action ? 0 : 16 }]}>
+          <Text
+            style={[
+              styles.content,
+              { marginRight: action ? 0 : 16 },
+              textStyle,
+            ]}
+          >
             {children}
           </Text>
           {action ? (
@@ -239,8 +262,9 @@ class Snackbar extends React.Component<Props, State> {
               color={colors.accent}
               compact
               mode="text"
+              textStyle={textStyle}
             >
-              {action.label.toUpperCase()}
+              {action.label}
             </Button>
           ) : null}
         </Surface>
