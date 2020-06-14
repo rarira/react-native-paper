@@ -42,6 +42,7 @@ type Props = {|
   style?: any,
   textStyle?: StyleProp<TextStyle>,
   buttonTextStyle?: StyleProp<TextStyle>,
+  buttonColor?: string,
   /**
    * @optional
    */
@@ -208,6 +209,7 @@ class Snackbar extends React.Component<Props, State> {
       wrapperStyle,
       textStyle,
       buttonTextStyle,
+      buttonColor,
     } = this.props;
     const { colors, roundness } = theme;
 
@@ -259,7 +261,7 @@ class Snackbar extends React.Component<Props, State> {
                 onDismiss();
               }}
               style={styles.button}
-              color={colors.accent}
+              color={buttonColor || colors.accent}
               compact
               mode="text"
               textStyle={buttonTextStyle}
